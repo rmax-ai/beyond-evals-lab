@@ -1,0 +1,11 @@
+{
+  "id": "example-success",
+  "description": "Demo A: Correct execution — refund duplicate, all checks pass",
+  "scenario": "success",
+  "expectedDisposition": "acceptable",
+  "expectedOutcome": "PASS",
+  "expectedVerification": "PASS",
+  "expectedValidation": "PASS",
+  "expectedTrajectory": "PASS",
+  "expectedControls": "PASS"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "example-verification-failure",
+  "description": "Demo C: Refund created but mandatory audit record is missing. Verification catches the gap.",
+  "scenario": "verification-failure",
+  "expectedDisposition": "not_acceptable",
+  "expectedOutcome": "PASS",
+  "expectedVerification": "FAIL",
+  "expectedVerificationDetails": {
+    "intended transaction refunded": "VERIFIED",
+    "refund amount correct": "VERIFIED",
+    "exactly one refund exists": "VERIFIED",
+    "audit record exists": "FAILED",
+    "unrelated state unchanged": "VERIFIED"
+  }
+}

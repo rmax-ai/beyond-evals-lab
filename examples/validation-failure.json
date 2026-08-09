@@ -1,0 +1,10 @@
+{
+  "id": "example-validation-failure",
+  "description": "Demo D: Refund executed correctly but should never have been issued. Verification passes, validation fails.",
+  "scenario": "validation-failure",
+  "expectedDisposition": "not_acceptable",
+  "expectedOutcome": "PASS",
+  "expectedVerification": "PASS",
+  "expectedValidation": "FAIL",
+  "explanation": "The refund was executed correctly. The system should not have issued a refund because no actual duplicate was established."
+}

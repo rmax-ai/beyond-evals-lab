@@ -1,0 +1,32 @@
+{
+  "name": "beyond-evals-lab",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Executable proof-of-concept for practical assurance of agentic systems",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "eval": "tsx src/cli/eval.ts",
+    "demo:success": "tsx src/cli/demo.ts success",
+    "demo:trajectory-failure": "tsx src/cli/demo.ts trajectory-failure",
+    "demo:verification-failure": "tsx src/cli/demo.ts verification-failure",
+    "demo:validation-failure": "tsx src/cli/demo.ts validation-failure",
+    "demo:control-block": "tsx src/cli/demo.ts control-block",
+    "demo:feedback-loop": "tsx src/cli/demo.ts feedback-loop",
+    "traces:mine": "tsx src/cli/mine.ts",
+    "assurance:report": "tsx src/cli/report.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "commander": "^13.0.0",
+    "zod": "^3.24.0"
+  }
+}
