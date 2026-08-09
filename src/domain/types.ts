@@ -71,6 +71,41 @@ export interface ToolObservation {
   timestamp: string;
 }
 
+export interface TraceEvent {
+  id: string;
+  runId: string;
+  sequence: number;
+  timestamp: string;
+  type:
+    | "request"
+    | "agent_decision"
+    | "tool_proposed"
+    | "control_decision"
+    | "tool_started"
+    | "tool_completed"
+    | "tool_failed"
+    | "verification"
+    | "validation"
+    | "agent_response"
+    | "user_correction";
+  data: Record<string, unknown>;
+}
+
+export interface AgentRun {
+  id: string;
+  request: AgentRequest;
+  initialState: WorldState;
+  finalState: WorldState;
+  trace: TraceEvent[];
+  startedAt: string;
+  completedAt: string;
+  usage?: {
+    inputTokens?: number;
+    outputTokens?: number;
+    estimatedCostUsd?: number;
+  };
+}
+
 export interface AgentContext {
   request: AgentRequest;
   visibleToolDefinitions: ToolDefinition[];
