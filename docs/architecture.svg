@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#6366f1" />
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#ef4444" />
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#22c55e" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="520" fill="#0f172a" rx="8" />
+
+  <!-- === Request → Agent → Runtime flow === -->
+  <!-- Request -->
+  <rect x="30" y="60" width="100" height="36" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="80" y="83" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Request</text>
+
+  <!-- Agent -->
+  <rect x="170" y="60" width="100" height="36" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="220" y="83" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Agent</text>
+  <line x1="130" y1="78" x2="168" y2="78" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Controls (above runtime) -->
+  <rect x="200" y="20" width="90" height="28" rx="5" fill="#1e293b" stroke="#6366f1" stroke-width="1" />
+  <text x="245" y="38" text-anchor="middle" fill="#818cf8" font-size="11" font-family="sans-serif">Controls</text>
+  <line x1="245" y1="48" x2="245" y2="58" stroke="#6366f1" stroke-width="1" stroke-dasharray="3,2" />
+
+  <!-- Runtime -->
+  <rect x="310" y="60" width="120" height="36" rx="6" fill="#312e81" stroke="#4338ca" stroke-width="1" />
+  <text x="370" y="83" text-anchor="middle" fill="#c7d2fe" font-size="12" font-family="sans-serif">Runtime</text>
+  <line x1="270" y1="78" x2="308" y2="78" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- World State -->
+  <rect x="470" y="60" width="110" height="36" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="525" y="83" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">World State</text>
+  <line x1="430" y1="78" x2="468" y2="78" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- === Post-execution artifacts === -->
+  <!-- Execution Trace -->
+  <rect x="400" y="140" width="130" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="465" y="162" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Execution Trace</text>
+  <line x1="465" y1="96" x2="465" y2="138" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Trajectory Analysis -->
+  <rect x="310" y="230" width="140" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="380" y="252" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Trajectory Analysis</text>
+  <line x1="465" y1="174" x2="380" y2="228" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Runtime Verifier -->
+  <rect x="560" y="230" width="150" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="635" y="252" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Runtime Verification</text>
+  <line x1="490" y1="174" x2="635" y2="228" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Validation -->
+  <rect x="300" y="320" width="100" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="350" y="342" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Validation</text>
+  <line x1="380" y1="264" x2="350" y2="318" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Assurance Report (center) -->
+  <rect x="430" y="320" width="140" height="34" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+  <text x="500" y="342" text-anchor="middle" fill="#c7d2fe" font-size="12" font-family="sans-serif" font-weight="bold">Assurance Report</text>
+  <line x1="450" y1="264" x2="500" y2="318" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+  <line x1="710" y1="264" x2="570" y2="318" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+  <line x1="350" y1="354" x2="428" y2="337" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- === Eval pipeline (offline, right side) === -->
+  <rect x="620" y="140" width="130" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="685" y="162" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Eval Datasets</text>
+
+  <!-- Monitoring (production traces → datasets) -->
+  <rect x="620" y="20" width="130" height="28" rx="5" fill="#1e293b" stroke="#22c55e" stroke-width="1" />
+  <text x="685" y="38" text-anchor="middle" fill="#4ade80" font-size="11" font-family="sans-serif">Monitoring</text>
+  <line x1="685" y1="48" x2="685" y2="138" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-green)" />
+
+  <!-- Eval Harness -->
+  <rect x="610" y="230" width="150" height="34" rx="6" fill="#312e81" stroke="#4338ca" stroke-width="1" />
+  <text x="685" y="252" text-anchor="middle" fill="#c7d2fe" font-size="12" font-family="sans-serif">Eval Harness</text>
+  <line x1="685" y1="174" x2="685" y2="228" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Eval → Assurance -->
+  <line x1="610" y1="247" x2="572" y2="337" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Block path (red dashed) -->
+  <rect x="200" y="140" width="90" height="28" rx="5" fill="#7f1d1d" stroke="#991b1b" stroke-width="1" />
+  <text x="245" y="158" text-anchor="middle" fill="#fca5a5" font-size="10" font-family="sans-serif">BLOCKED</text>
+  <line x1="245" y1="88" x2="245" y2="138" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-red)" />
+
+  <!-- Labels -->
+  <text x="245" y="195" text-anchor="middle" fill="#6366f1" font-size="9" font-family="sans-serif">← control rejects</text>
+
+  <!-- Run artifacts label -->
+  <text x="140" y="200" text-anchor="middle" fill="#6366f1" font-size="9" font-family="sans-serif">→ pre-action</text>
+
+  <!-- Evidence flow label -->
+  <text x="140" y="350" text-anchor="middle" fill="#6366f1" font-size="9" font-family="sans-serif">← evidence production</text>
+
+  <!-- Monitoring → Eval label -->
+  <text x="730" y="178" text-anchor="middle" fill="#22c55e" font-size="8" font-family="sans-serif">traces →</text>
+  <text x="730" y="190" text-anchor="middle" fill="#22c55e" font-size="8" font-family="sans-serif">candidate</text>
+  <text x="730" y="202" text-anchor="middle" fill="#22c55e" font-size="8" font-family="sans-serif">fixtures</text>
+
+  <!-- Verification vs Eval label -->
+  <text x="490" y="410" text-anchor="middle" fill="#6366f1" font-size="9" font-family="sans-serif">verifyRefundOutcome() — one function, two epistemic roles</text>
+  <line x1="490" y1="416" x2="490" y2="340" stroke="#6366f1" stroke-width="0.5" stroke-dasharray="2,2" />
+
+  <!-- Population stats -->
+  <rect x="610" y="320" width="150" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="685" y="342" text-anchor="middle" fill="#e2e8f0" font-size="12" font-family="sans-serif">Population Statistics</text>
+  <line x1="685" y1="264" x2="685" y2="318" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- Bottom: dual axes -->
+  <text x="400" y="460" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">deterministic / probabilistic</text>
+  <text x="400" y="476" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">describes the evidence mechanism</text>
+
+  <text x="400" y="500" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="sans-serif">tests / verification / evals / monitoring / controls</text>
+  <text x="400" y="516" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">describe how evidence is being used</text>
+
+  <!-- Separator lines -->
+  <line x1="60" y1="440" x2="740" y2="440" stroke="#1e293b" stroke-width="1" />
+  <line x1="60" y1="490" x2="740" y2="490" stroke="#1e293b" stroke-width="1" />
+</svg>

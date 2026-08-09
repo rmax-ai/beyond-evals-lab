@@ -1,1 +1,2 @@
-onlyBuiltDependencies: '["better-sqlite3","esbuild"]'
+onlyBuiltDependencies:
+  - esbuild
