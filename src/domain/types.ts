@@ -106,6 +106,13 @@ export interface AgentRun {
   };
 }
 
+/** Deliberate runtime fault injection used only by demonstrations and tests. */
+export interface RuntimeFaults {
+  suppressAuditWrite?: boolean;
+  mutateUnrelatedTransaction?: boolean;
+  duplicateRefundWrite?: boolean;
+}
+
 export interface AgentContext {
   request: AgentRequest;
   visibleToolDefinitions: ToolDefinition[];

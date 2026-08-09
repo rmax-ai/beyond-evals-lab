@@ -41,10 +41,10 @@ export function decideNextAction(context: AgentContext, mode: AgentMode): AgentD
       return completed("Refund processing is complete.");
     }
 
-    return call(context, "writeAuditRecord", {
-      action: "refund_created",
-      entityType: "transaction",
-      entityId: successfulRefund.transactionId,
+      return call(context, "writeAuditRecord", {
+        action: "refund_created",
+        entityType: "refund",
+        entityId: successfulRefund.id,
       metadata: {
         refundId: successfulRefund.id,
         amountCents: successfulRefund.amountCents,

@@ -8,6 +8,7 @@ import type {
   AuditRecord,
   ProposedToolCall,
   Refund,
+  RuntimeFaults,
   TraceEvent,
   User,
   WorldState,
@@ -26,6 +27,8 @@ export interface ExecuteToolContext {
   runId?: string;
   /** Supplied by executeRun to connect trace events to the proposed call. */
   toolCallId?: string;
+  /** Deliberate fault injection for demonstrations and verifier tests. */
+  faults?: RuntimeFaults;
 }
 
 /** Executes one tool proposal through controls, execution, immutable mutation, and tracing. */
@@ -112,7 +115,7 @@ export async function executeTool(
     // The registry associates createRefund with a Tool<*, Refund>; its erased
     // registry type requires recovering that known output contract here.
     newState = applyRefund(context.state, result.output as Refund);
-  } else if (toolName === "writeAuditRecord") {
+  } else if (toolName === "writeAuditRecord" && !context.faults?.suppressAuditWrite) {
     // The registry associates writeAuditRecord with a Tool<*, AuditRecord>.
     newState = applyAuditRecord(context.state, result.output as AuditRecord);
   }
