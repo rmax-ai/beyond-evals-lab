@@ -40,18 +40,21 @@ function refundId(result: MockModelToolResult): string | undefined {
     : undefined;
 }
 
+// Eve derives tool names from agent/tools/<file>.ts — kebab-case, verbatim.
+// The bridge wrappers translate to the lab's camelCase ToolName internally.
+
 function respondToHappyPath(request: MockModelRequest): MockModelResponse {
-  const transaction = findToolResult(request, "getTransaction");
+  const transaction = findToolResult(request, "get-transaction");
   if (transaction === undefined) {
-    return toolCall("getTransaction", { transactionId: "txn-1" });
+    return toolCall("get-transaction", { transactionId: "txn-1" });
   }
   if (!isBridgeSuccess(transaction)) {
     return { text: "TRANSACTION_LOOKUP_FAILED" };
   }
 
-  const refund = findToolResult(request, "createRefund");
+  const refund = findToolResult(request, "create-refund");
   if (refund === undefined) {
-    return toolCall("createRefund", { transactionId: "txn-1", amountCents: 4200 });
+    return toolCall("create-refund", { transactionId: "txn-1", amountCents: 4200 });
   }
 
   const id = refundId(refund);
@@ -59,9 +62,9 @@ function respondToHappyPath(request: MockModelRequest): MockModelResponse {
     return { text: "REFUND_CREATION_FAILED" };
   }
 
-  const audit = findToolResult(request, "writeAuditRecord");
+  const audit = findToolResult(request, "write-audit-record");
   if (audit === undefined) {
-    return toolCall("writeAuditRecord", {
+    return toolCall("write-audit-record", {
       action: "refund_created",
       entityType: "transaction",
       entityId: "txn-1",
@@ -72,9 +75,9 @@ function respondToHappyPath(request: MockModelRequest): MockModelResponse {
     return { text: "AUDIT_WRITE_FAILED" };
   }
 
-  const persistedRefund = findToolResult(request, "getRefund");
+  const persistedRefund = findToolResult(request, "get-refund");
   if (persistedRefund === undefined) {
-    return toolCall("getRefund", { refundId: id });
+    return toolCall("get-refund", { refundId: id });
   }
 
   return isBridgeSuccess(persistedRefund) && refundId(persistedRefund) === id
@@ -83,14 +86,14 @@ function respondToHappyPath(request: MockModelRequest): MockModelResponse {
 }
 
 function respondToOverLimit(request: MockModelRequest): MockModelResponse {
-  const transaction = findToolResult(request, "getTransaction");
+  const transaction = findToolResult(request, "get-transaction");
   if (transaction === undefined) {
-    return toolCall("getTransaction", { transactionId: "txn-3" });
+    return toolCall("get-transaction", { transactionId: "txn-3" });
   }
 
-  const refund = findToolResult(request, "createRefund");
+  const refund = findToolResult(request, "create-refund");
   if (refund === undefined) {
-    return toolCall("createRefund", { transactionId: "txn-3", amountCents: 15000 });
+    return toolCall("create-refund", { transactionId: "txn-3", amountCents: 15000 });
   }
 
   return isBridgeSuccess(refund)
@@ -99,25 +102,25 @@ function respondToOverLimit(request: MockModelRequest): MockModelResponse {
 }
 
 function respondToAuditGate(request: MockModelRequest): MockModelResponse {
-  const refund = findToolResult(request, "createRefund");
+  const refund = findToolResult(request, "create-refund");
   if (refund === undefined) {
-    return toolCall("createRefund", { transactionId: "txn-1", amountCents: 4200 });
+    return toolCall("create-refund", { transactionId: "txn-1", amountCents: 4200 });
   }
   if (!isBridgeSuccess(refund)) {
     return { text: "REFUND_CREATION_FAILED" };
   }
 
-  const transactions = findToolResult(request, "getTransactions");
+  const transactions = findToolResult(request, "get-transactions");
   if (transactions === undefined) {
-    return toolCall("getTransactions", {});
+    return toolCall("get-transactions", {});
   }
   if (isBridgeSuccess(transactions)) {
     return { text: "AUDIT_GATE_BYPASSED" };
   }
 
-  const audit = findToolResult(request, "writeAuditRecord");
+  const audit = findToolResult(request, "write-audit-record");
   if (audit === undefined) {
-    return toolCall("writeAuditRecord", {
+    return toolCall("write-audit-record", {
       action: "refund_created",
       entityType: "transaction",
       entityId: "txn-1",
@@ -130,9 +133,9 @@ function respondToAuditGate(request: MockModelRequest): MockModelResponse {
 }
 
 function respondToUnknownTransaction(request: MockModelRequest): MockModelResponse {
-  const transaction = findToolResult(request, "getTransaction");
+  const transaction = findToolResult(request, "get-transaction");
   return transaction === undefined
-    ? toolCall("getTransaction", { transactionId: "txn-999" })
+    ? toolCall("get-transaction", { transactionId: "txn-999" })
     : { text: "NOT_FOUND" };
 }
 
