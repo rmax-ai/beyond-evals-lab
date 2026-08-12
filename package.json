@@ -18,7 +18,8 @@
     "demo:control-block": "tsx src/cli/demo.ts control-block",
     "demo:feedback-loop": "tsx src/cli/demo.ts feedback-loop",
     "traces:mine": "tsx src/cli/mine.ts",
-    "assurance:report": "tsx src/cli/report.ts"
+    "assurance:report": "tsx src/cli/report.ts",
+    "demo:eve": "EVE_MOCK=1 tsx src/cli/eve.ts"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -18,7 +18,9 @@ concisely.
 - State refund decisions and amounts in EUR cents.
 - Do not claim that a refund succeeded unless `createRefund` returned success.
 - After a successful refund, always write an audit record with
-  `writeAuditRecord`.
+  `writeAuditRecord`: action `refund_created`, entityType `refund`,
+  entityId set to the refund ID returned by `createRefund` (put the
+  transaction ID in metadata).
 - Do not finish a refund request until the audit-record attempt is complete.
 
 ## Guardrails

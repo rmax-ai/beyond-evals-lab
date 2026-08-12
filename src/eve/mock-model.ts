@@ -66,9 +66,9 @@ function respondToHappyPath(request: MockModelRequest): MockModelResponse {
   if (audit === undefined) {
     return toolCall("write-audit-record", {
       action: "refund_created",
-      entityType: "transaction",
-      entityId: "txn-1",
-      metadata: { refundId: id },
+      entityType: "refund",
+      entityId: id,
+      metadata: { transactionId: "txn-1" },
     });
   }
   if (!isBridgeSuccess(audit)) {
@@ -122,8 +122,9 @@ function respondToAuditGate(request: MockModelRequest): MockModelResponse {
   if (audit === undefined) {
     return toolCall("write-audit-record", {
       action: "refund_created",
-      entityType: "transaction",
-      entityId: "txn-1",
+      entityType: "refund",
+      entityId: refundId(refund),
+      metadata: { transactionId: "txn-1" },
     });
   }
 
@@ -137,6 +138,27 @@ function respondToUnknownTransaction(request: MockModelRequest): MockModelRespon
   return transaction === undefined
     ? toolCall("get-transaction", { transactionId: "txn-999" })
     : { text: "NOT_FOUND" };
+}
+
+function respondToDemoAssurance(request: MockModelRequest): MockModelResponse {
+  const persistedRefund = findToolResult(request, "get-refund");
+  if (persistedRefund === undefined) {
+    return respondToHappyPath(request);
+  }
+  const refund = findToolResult(request, "create-refund");
+  const id = refund === undefined ? undefined : refundId(refund);
+  if (!isBridgeSuccess(persistedRefund) || id === undefined || refundId(persistedRefund) !== id) {
+    return respondToHappyPath(request);
+  }
+
+  const exportedRun = findToolResult(request, "export-run");
+  if (exportedRun === undefined) {
+    return toolCall("export-run", {});
+  }
+
+  return isBridgeSuccess(exportedRun)
+    ? { text: "DEMO_RUN_EXPORTED" }
+    : { text: "RUN_EXPORT_FAILED" };
 }
 
 function respondToScenario(request: MockModelRequest): MockModelResponse {
@@ -153,6 +175,9 @@ function respondToScenario(request: MockModelRequest): MockModelResponse {
   }
   if (message.includes("[case: refund-unknown-transaction]")) {
     return respondToUnknownTransaction(request);
+  }
+  if (message.includes("[case: demo-assurance]")) {
+    return respondToDemoAssurance(request);
   }
 
   return { text: "" };

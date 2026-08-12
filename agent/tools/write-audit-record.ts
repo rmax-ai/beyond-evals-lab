@@ -9,7 +9,7 @@ function toolCallId(ctx: { readonly callId: string }): string {
 
 // `any` is required to avoid Eve v0.27.7's JSON Schema generic introspection issue.
 export default defineTool<any, any>({
-  description: "Writes an audit record. After every successful refund, write an audit record referencing the transaction and refund. The system enforces this: further tool calls are blocked by governance until the audit record is written. If a call is blocked (success: false), do not retry it to bypass governance; explain the block or take an authorized next step.",
+  description: "Writes an audit record. After every successful refund, write an audit record with action 'refund_created', entityType 'refund', and entityId set to the refund ID returned by createRefund (transaction ID goes in metadata). The system enforces this: further tool calls are blocked by governance until the audit record is written. If a call is blocked (success: false), do not retry it to bypass governance; explain the block or take an authorized next step.",
   inputSchema: {
     type: "object",
     properties: {
