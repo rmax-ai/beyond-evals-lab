@@ -8,6 +8,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
+    "eve:info": "npx eve info",
+    "eve:eval": "EVE_MOCK=1 npx eve eval",
     "eval": "tsx src/cli/eval.ts",
     "demo:success": "tsx src/cli/demo.ts success",
     "demo:trajectory-failure": "tsx src/cli/demo.ts trajectory-failure",
