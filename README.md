@@ -112,6 +112,21 @@ Production traces become the empirical task distribution for future evaluations.
 The human curation step is preserved deliberately — observed behavior is not
 automatically expected behavior.
 
+## Eve Agent Wiring
+
+Eve hosts a real framework agent whose tools still run through the lab's
+governed runtime. Eve's scenario evals provide a capability lens; the lab's
+assurance report provides the governance lens over the same session.
+
+```bash
+pnpm eve:info
+pnpm eve:eval
+pnpm demo:eve
+```
+
+Run evals with `EVE_MOCK=1` for the keyless mock path. A live model is opt-in via
+`EVE_MODEL` and the provider's API key.
+
 ## Architecture
 
 ```

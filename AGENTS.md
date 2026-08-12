@@ -27,10 +27,11 @@ and NOT a capability demonstration.
 | CLI | commander |
 | Telemetry | @opentelemetry/api |
 | HTTP (optional) | fastify |
+| Agent under test | Eve 0.27.7 (alongside the rule-based default) |
 
 ## Hard Constraints
 
-- **No agent frameworks.** No LangChain, no agent SDKs, no Temporal, no workflow engines.
+- **No agent frameworks in the assurance stack.** No LangChain, agent SDKs, Temporal, or workflow engines in the assurance implementation. Eve is the agent-under-test host, deliberately wired in Milestone 8; it is not part of the assurance implementation.
 - **No API keys required by default.** The rule-based agent works without any external service.
 - **Tools are the only state mutation path.** No agent, verifier, or grader directly mutates `WorldState`.
 - **Controls run before mutation, verification after.** Never invert this ordering.
@@ -109,6 +110,17 @@ class VerificationGrader implements Grader {
 class VerificationGrader extends Verifier implements Grader {}
 ```
 
+## Eve Agent
+
+- `agent/` is at the repository root (the Eve app root); `evals/` is also at
+  the repository root, never inside `agent/`. `.eve/` is gitignored.
+- Tool names are filenames verbatim (kebab-case). Wrappers must delegate through
+  `eveSessionStore` → `executeToolCall`; they never mutate `WorldState` directly.
+- Do not import zod anywhere under `agent/`.
+- Gates: `pnpm eve:info` for discovery, `EVE_MOCK=1 pnpm eve:eval` for keyless
+  scenario evals, and `pnpm demo:eve` for an assurance report over a session.
+- `pnpm-lock.yaml` is tracked; `.gitignore` was updated accordingly.
+
 ## Code Conventions
 
 ### TypeScript
@@ -160,12 +172,15 @@ pnpm install          # install dependencies
 pnpm test             # run all tests (must pass before merge)
 pnpm test:watch       # watch mode
 pnpm eval             # run eval harness against core dataset
+pnpm eve:info         # discover and compile the Eve agent
+pnpm eve:eval         # run Eve scenario evals (use EVE_MOCK=1 for keyless mode)
 pnpm demo:success     # Demo A — correct execution
 pnpm demo:trajectory-failure   # Demo B — outcome pass, trajectory fail
 pnpm demo:verification-failure # Demo C — verification failure
 pnpm demo:validation-failure   # Demo D — verification pass, validation fail
 pnpm demo:control-block        # Demo E — guardrail block
 pnpm demo:feedback-loop        # Production incident → regression
+pnpm demo:eve          # assurance report over a live Eve session
 pnpm traces:mine      # mine traces for candidate regression cases
 pnpm assurance:report # generate assurance report
 ```

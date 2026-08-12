@@ -121,10 +121,25 @@ outcome, and residual risk as separate sections.
 
 ## Milestone 8 — Optional Model Integration
 
-**Focus:** Thin LLM adapter — only after everything above works.
+**Focus:** Eve agent-under-test wiring — delivered after everything above works.
 
-- [ ] `src/agent/model-agent.ts` — ModelAgent with LanguageModel adapter
-- [ ] `src/agent/prompts.ts` — LLM prompt templates
-- [ ] Optional: compare rule-agent vs model-agent eval results
+- [x] Eve agent at `agent/` with governed tool wrappers
+- [x] Eve scenario evals at `evals/`
+- [x] `src/eve/` bridge plus `pnpm demo:eve` assurance report
 
-**AC:** ModelAgent can be swapped in without changing any assurance components.
+**AC:** The Eve agent runs through the existing assurance components without
+changing them.
+
+The deliverable is the Eve wiring (`agent/`, `evals/`, `src/eve/` bridge, and
+`demo:eve`), rather than the originally proposed hand-rolled `ModelAgent`
+adapter.
+
+## Milestone 9 — Live Model Run (optional)
+
+**Focus:** Run the Eve agent with a real provider using `EVE_MODEL` and
+`OPENAI_API_KEY`, then compare the result against the mock evals.
+
+- [ ] Run a live Eve session with `EVE_MODEL` + `OPENAI_API_KEY`
+- [ ] Compare live-model behavior with the keyless mock eval results
+
+**AC:** Optional only; no API key is required by default.

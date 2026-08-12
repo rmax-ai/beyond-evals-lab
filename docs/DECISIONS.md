@@ -98,10 +98,37 @@ verification harder — no way to inspect pre/post state diffs.
 complexity without strengthening the experiment. Fastify is optional for those
 who want it.
 
+## Decision 11: Eve as the agent-under-test host
+
+**Chosen:** Eve (Vercel's filesystem-first framework, pinned 0.27.7) hosts a
+real framework agent whose tools delegate to the lab's `executeTool()` runtime.
+Controls run before mutation and the full trace is recorded.
+
+**Rejected:** Hand-rolled `ModelAgent` adapter (Milestone 8 as originally
+written); Eve as the assurance implementation (it is only the subject).
+
+**Why:** This proves the assurance machinery holds against a real framework
+agent. Eve's own eval suite provides the capability lens alongside the lab's
+governance lens. It is keyless by default via `EVE_MOCK=1` and a scripted
+`mockModel`; a live model is selected through `EVE_MODEL`.
+
+**Consequences:** Verified in this build:
+
+- Eve tool names are filenames verbatim: `agent/tools/get-transaction.ts` maps
+  to runtime tool `get-transaction` (no camelCase conversion).
+- `agent/sandbox.ts` pins `justbash()` because this machine has no Docker.
+- The mock model needs agent-level `modelContextWindowTokens` to skip gateway
+  metadata lookup during compaction compile.
+- Files under `agent/` must not import zod: Eve v0.27.7 with zod@3 crashes,
+  while the lab stays on zod 3 with plain JSON schemas at the Eve boundary.
+- After a refund, `write-audit-record` must use `entityType: "refund"` and
+  `entityId: <refund id>`; `verifyAuditRecord` enforces this contract.
+
 ## Known Limitations
 
 - Single-threaded execution — no concurrent agent runs
 - No persistence beyond SQLite — traces live in one file
-- Rule-based agent handles ~5 patterns — not a general refund system
+- Rule-based agent handles ~5 patterns — not a general refund system; an Eve
+  agent is also available through the `EVE_MOCK=1` path
 - No streaming or real-time monitoring
 - OpenTelemetry spans are observational only — SQLite remains authoritative

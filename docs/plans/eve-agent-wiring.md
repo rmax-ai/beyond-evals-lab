@@ -1,7 +1,7 @@
 # Plan — Wire Eve Agents into Beyond-Evals Lab
 
 **Date:** 2026-08-12
-**Status:** In progress
+**Status:** Complete
 **Realizes:** ROADMAP Milestone 8 (swap-in model agent) — via Eve instead of a hand-rolled adapter.
 
 ## Why
@@ -59,16 +59,16 @@ beyond-evals-lab/           (app root = repo root; package.json name = beyond-ev
 
 | Phase | Deliverable | Files |
 |-------|-------------|-------|
-| A | Bridge + agent scaffold | `src/eve/session-runtime.ts`, `src/eve/session-store.ts`, `agent/agent.ts`, `agent/instructions.md` |
-| B1 | Read tool wrappers | `agent/tools/get-transactions.ts`, `agent/tools/get-transaction.ts`, `test/eve/session-runtime.test.ts` |
-| B2 | Write tool wrappers | `agent/tools/create-refund.ts`, `agent/tools/get-refund.ts`, `agent/tools/write-audit-record.ts` |
-| C | Eve evals + scripts | `evals/evals.config.ts`, 4× `evals/*.eval.ts`, package.json scripts (`eve:info`, `eve:eval`) |
-| D | Assurance bridge + docs | `src/cli/eve.ts` (`demo:eve`), `docs/` updates (DECISIONS, AGENTS, ROADMAP), README |
+| [x] A | Bridge + agent scaffold | `src/eve/session-runtime.ts`, `src/eve/session-store.ts`, `agent/agent.ts`, `agent/instructions.md` |
+| [x] B1 | Read tool wrappers | `agent/tools/get-transactions.ts`, `agent/tools/get-transaction.ts`, `test/eve/session-runtime.test.ts` |
+| [x] B2 | Write tool wrappers | `agent/tools/create-refund.ts`, `agent/tools/get-refund.ts`, `agent/tools/write-audit-record.ts` |
+| [x] C | Eve evals + scripts | `evals/evals.config.ts`, 4× `evals/*.eval.ts`, package.json scripts (`eve:info`, `eve:eval`) |
+| [x] D | Assurance bridge + docs | `src/cli/eve.ts` (`demo:eve`), `docs/` updates (DECISIONS, AGENTS, ROADMAP), README |
 
 ## Verification gates (run by orchestrator after each phase)
 
 ```bash
-pnpm test              # 91 existing + new — all green
+pnpm test              # 96 tests — all green
 pnpm typecheck         # tsc --noEmit clean
 npx eve info           # Compile: ready, 0 errors
 npx eve eval           # all pass, keyless (mockModel)
@@ -79,6 +79,13 @@ npx eve eval           # all pass, keyless (mockModel)
 - pnpm 11.21.0 via corepack (mise Node 24): `export PATH="$HOME/.local/share/mise/installs/node/24.13.0/bin:$PATH"`
 - Codex binary via mise shims. Sandbox: workspace-write. Git/verification handled by orchestrator.
 - Push access fixed: repo is `rmax-ai/beyond-evals-lab`, viewerPermission=ADMIN.
+
+## Verification Results
+
+- Vitest: 96 tests passing
+- Eve evals: 4/4 passing
+- `pnpm demo:eve`: `ACCEPTABLE` assurance report
+- Typecheck: clean
 
 ## Out of scope (future)
 
