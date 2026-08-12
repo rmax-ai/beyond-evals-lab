@@ -1,5 +1,36 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
+
+# Eve runtime cache (auto-generated module registry)
 .eve/
+
+# Agent orchestration scratch (codex/droid prompts)
 .hermes/
-*.log
+
+# SQLite databases
+traces/*.db
+*.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo
+
+# Test artifacts
+coverage/
