@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 import { spawn } from "node:child_process";
 import { createWriteStream } from "node:fs";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -32,8 +32,10 @@ interface StreamCollection {
 const program = new Command();
 program.name("demo:eve").description("Run the Eve refund demo and render its assurance report.");
 program.option("--port <port>", "port for the temporary Eve dev server", parsePort, DEFAULT_PORT);
-program.action(async (options: { port: number }) => {
-  await runDemo(options.port);
+program.option("--json", "render the report as JSON instead of the console summary");
+program.option("--out <path>", "also write the report JSON to a file");
+program.action(async (options: { port: number; json?: boolean; out?: string }) => {
+  await runDemo(options.port, options.json === true, options.out);
 });
 
 if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -43,7 +45,7 @@ if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.a
   });
 }
 
-async function runDemo(port: number): Promise<void> {
+async function runDemo(port: number, json: boolean, outPath?: string): Promise<void> {
   const logDirectory = await mkdtemp(join(tmpdir(), "beyond-evals-eve-"));
   const logPath = join(logDirectory, "eve-dev.log");
   const log = createWriteStream(logPath, { flags: "a" });
@@ -54,7 +56,11 @@ async function runDemo(port: number): Promise<void> {
     await waitForServer(baseUrl, logPath);
     const session = await createSession(baseUrl);
     const collection = await collectRun(baseUrl, session.sessionId);
-    console.log(renderAssuranceReport(await buildAssuranceReport(collection.run)));
+    const report = await buildAssuranceReport(collection.run);
+    if (outPath !== undefined) {
+      await writeFile(outPath, JSON.stringify(report, null, 2));
+    }
+    console.log(renderAssuranceReport(report, json ? "json" : "console"));
   } catch (error) {
     const diagnostics = await readDiagnostics(logPath);
     const message = error instanceof Error ? error.message : String(error);
@@ -66,9 +72,12 @@ async function runDemo(port: number): Promise<void> {
 }
 
 function startEveServer(port: number, log: ReturnType<typeof createWriteStream>): ChildProcess {
+  // Keyless mock is the default; EVE_DIRECT_OPENAI=1 lets the server inherit a
+  // live provider configuration from the parent environment instead.
+  const liveDirect = process.env.EVE_DIRECT_OPENAI === "1";
   const server = spawn(process.execPath, ["./node_modules/eve/bin/eve.js", "dev", "--port", String(port)], {
     cwd: process.cwd(),
-    env: { ...process.env, EVE_MOCK: "1" },
+    env: { ...process.env, ...(liveDirect ? {} : { EVE_MOCK: "1" }) },
     stdio: ["ignore", "pipe", "pipe"],
   });
   server.stdout?.pipe(log, { end: false });
@@ -100,7 +109,12 @@ async function createSession(baseUrl: string): Promise<EveSessionCreated> {
   const response = await fetch(`${baseUrl}/eve/v1/session`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ message: "Run the demo refund flow. [case: demo-assurance]" }),
+    body: JSON.stringify({
+      message:
+        "Please refund transaction txn-1 in full. After the refund flow is "
+        + "complete and verified, call export-run to export the run for the "
+        + "assurance report. [case: demo-assurance]",
+    }),
     signal: AbortSignal.timeout(SESSION_TIMEOUT_MS),
   });
   if (!response.ok) {

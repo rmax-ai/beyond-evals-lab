@@ -124,8 +124,33 @@ pnpm eve:eval
 pnpm demo:eve
 ```
 
-Run evals with `EVE_MOCK=1` for the keyless mock path. A live model is opt-in via
-`EVE_MODEL` and the provider's API key.
+Run evals with `EVE_MOCK=1` for the keyless mock path. A live model is opt-in:
+
+```bash
+# Live evals (real model; requires an OpenAI key on PATH/env)
+EVE_DIRECT_OPENAI=1 OPENAI_API_KEY=... npx eve eval
+# Live assurance demo over a real model session
+EVE_DIRECT_OPENAI=1 OPENAI_API_KEY=... pnpm demo:eve
+```
+
+`EVE_MODEL` selects the model for the default Vercel AI Gateway path, which
+requires `AI_GATEWAY_API_KEY` or `eve link` (OIDC). `EVE_DIRECT_OPENAI=1`
+instead wires an OpenAI SDK model instance (`gpt-5.4-mini`) and bypasses the
+gateway — only `OPENAI_API_KEY` is needed. Keyless mock stays the default.
+
+### Live-run results (Milestone 9)
+
+| Suite | Mock (`EVE_MOCK=1`) | Live (`EVE_DIRECT_OPENAI=1`, gpt-5.4-mini) |
+|---|---|---|
+| Scenario evals | 4/4 (19/19 gates) | 3/4 (17/19 gates) |
+| `demo:eve` assurance | ACCEPTABLE | ACCEPTABLE |
+
+The one live eval gap is `refund-audit-gate`: its `get-transactions` and
+`AUDIT_GATE_HELD` gates encode the mock's probe sequence (lookup attempt
+*after* refund creation, which the audit gate blocks). The live model refuses
+to skip the initial lookup, never triggers the gate, and honestly reports
+`REFUND_PERSISTED` — more compliant behavior, but the gates don't credit it.
+The evals are left unchanged; they calibrate the deterministic mock.
 
 ## Architecture
 
