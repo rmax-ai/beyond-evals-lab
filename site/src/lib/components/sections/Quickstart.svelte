@@ -11,16 +11,21 @@
     <div><span class="text-slate-500">$</span> cd beyond-evals-lab</div>
     <div><span class="text-slate-500">$</span> pnpm install</div>
     <div><span class="text-slate-500">$</span> pnpm test</div>
-    <div class="mt-2 text-slate-500"># Output: 91 tests passed in 22 files</div>
+    <div class="mt-2 text-slate-500"># Output: 96 tests passed in 23 files</div>
     <div class="mt-3"><span class="text-slate-500">$</span> pnpm demo:success</div>
     <div><span class="text-slate-500">$</span> pnpm demo:trajectory-failure</div>
     <div><span class="text-slate-500">$</span> pnpm demo:validation-failure</div>
     <div class="mt-2 text-slate-500"># Run all demos to see each assurance concept in action</div>
     <div class="mt-3"><span class="text-slate-500">$</span> pnpm eval</div>
     <div class="text-slate-500"># Eval harness across 20 cases, multi-dimensional report</div>
+    <div class="mt-3"><span class="text-slate-500">$</span> pnpm demo:eve</div>
+    <div class="text-slate-500"># Real framework agent (Eve) through the same governed runtime — keyless</div>
   </div>
 
   <p class="mt-4 text-sm text-slate-500">
-    No API keys required. The default agent is rule-based and fully deterministic.
+    No API keys required. The default agent is rule-based and fully
+    deterministic. A live model for the Eve agent is opt-in:
+    <code class="font-mono text-slate-400">EVE_DIRECT_OPENAI=1</code> +
+    <code class="font-mono text-slate-400">OPENAI_API_KEY</code>.
   </p>
 </Section>

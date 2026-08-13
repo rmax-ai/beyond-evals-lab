@@ -45,5 +45,13 @@
         if they exist at all.
       </p>
     </Card>
+    <Card>
+      <h3 class="text-sm font-semibold text-indigo-400 mb-2">Same agent, two lenses</h3>
+      <p class="text-sm text-slate-400 leading-relaxed">
+        Eve hosts a real framework agent whose tool calls still pass through
+        the lab's controls and verification. Eve's evals score capability; the
+        assurance report checks governance. Neither lens alone is assurance.
+      </p>
+    </Card>
   </div>
 </Section>

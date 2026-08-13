@@ -7,6 +7,7 @@ export const STACK = [
   "zod",
   "commander",
   "@opentelemetry/api",
+  "Eve 0.27.7 (agent-under-test)",
 ] as const;
 
 export const DEMOS = [
@@ -68,10 +69,17 @@ export const EXPERIMENTS = [
     insight:
       "Production traces become the empirical task distribution for future evaluations. The human curation step is preserved deliberately.",
   },
+  {
+    num: 8,
+    title: "A real agent, same governed runtime",
+    commands: ["EVE_MOCK=1 pnpm eve:eval", "pnpm demo:eve"],
+    insight:
+      "Eve hosts a real framework agent whose tool calls still pass through the lab's controls, verification, and trace. Eve's evals score behavior; the lab's assurance report checks governance — same agent, two lenses. Keyless by default; a live model is opt-in.",
+  },
 ] as const;
 
 export const METRICS = [
-  { label: "Tests", value: "91", desc: "across 22 test files", status: "pass" },
+  { label: "Tests", value: "96", desc: "across 23 test files", status: "pass" },
   { label: "Verified Outcome Rate", value: "90.0%", desc: "deterministic claims per run", status: "pass" },
   { label: "Validation Pass Rate", value: "85.0%", desc: "business-intent rules", status: "pass" },
   { label: "Outcome Success Rate", value: "65.0%", desc: "over 20 eval cases", status: "warn" },

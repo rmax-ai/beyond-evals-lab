@@ -7,7 +7,7 @@
 <Section>
   <h2 class="text-2xl font-bold text-white mb-4">Experiments</h2>
   <p class="text-slate-400 mb-8 leading-relaxed">
-    Seven experiments, each runnable with a single command. Understand each
+    Eight experiments, each runnable with a single command. Understand each
     assurance concept by observing it in action — no theory required.
   </p>
 
