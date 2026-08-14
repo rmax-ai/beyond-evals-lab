@@ -10,6 +10,7 @@ import { Command } from "commander";
 
 import { buildAssuranceReport } from "../assurance/build-report.js";
 import { renderAssuranceReport } from "../assurance/render-report.js";
+import { DEFAULT_TRACE_DATABASE_PATH, SqliteTraceStore } from "../traces/sqlite.js";
 
 import type { ChildProcess } from "node:child_process";
 import type { AgentRun } from "../domain/types.js";
@@ -56,6 +57,7 @@ async function runDemo(port: number, json: boolean, outPath?: string): Promise<v
     await waitForServer(baseUrl, logPath);
     const session = await createSession(baseUrl);
     const collection = await collectRun(baseUrl, session.sessionId);
+    await persistEveRun(collection.run);
     const report = await buildAssuranceReport(collection.run);
     if (outPath !== undefined) {
       await writeFile(outPath, JSON.stringify(report, null, 2));
@@ -71,19 +73,43 @@ async function runDemo(port: number, json: boolean, outPath?: string): Promise<v
   }
 }
 
+/** Persists an exported Eve session artifact for later mining and reporting. */
+export async function persistEveRun(
+  run: AgentRun,
+  databasePath = DEFAULT_TRACE_DATABASE_PATH,
+): Promise<void> {
+  const store = new SqliteTraceStore(databasePath);
+  try {
+    await store.saveRun(run);
+  } finally {
+    store.close();
+  }
+}
+
 function startEveServer(port: number, log: ReturnType<typeof createWriteStream>): ChildProcess {
   // Keyless mock is the default; EVE_DIRECT_OPENAI=1 lets the server inherit a
   // live provider configuration from the parent environment instead.
   const liveDirect = process.env.EVE_DIRECT_OPENAI === "1";
   const server = spawn(process.execPath, ["./node_modules/eve/bin/eve.js", "dev", "--port", String(port)], {
     cwd: process.cwd(),
-    env: { ...process.env, ...(liveDirect ? {} : { EVE_MOCK: "1" }) },
+    env: createEveServerEnvironment(process.env),
     stdio: ["ignore", "pipe", "pipe"],
   });
   server.stdout?.pipe(log, { end: false });
   server.stderr?.pipe(log, { end: false });
   server.once("error", (error: Error) => log.write(`Unable to start Eve dev server: ${error.message}\n`));
   return server;
+}
+
+/** Builds an isolated Eve server environment for mock or direct-model execution. */
+export function createEveServerEnvironment(environment: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+  const serverEnvironment = { ...environment };
+  if (serverEnvironment.EVE_DIRECT_OPENAI === "1") {
+    delete serverEnvironment.EVE_MOCK;
+  } else {
+    serverEnvironment.EVE_MOCK = "1";
+  }
+  return serverEnvironment;
 }
 
 async function waitForServer(baseUrl: string, logPath: string): Promise<void> {

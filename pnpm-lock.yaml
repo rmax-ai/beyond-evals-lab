@@ -14,16 +14,22 @@ importers:
       '@opentelemetry/api':
         specifier: ^1.9.0
         version: 1.9.1
+      better-sqlite3:
+        specifier: ^13.0.3
+        version: 13.0.3
       commander:
         specifier: ^13.0.0
         version: 13.1.0
       eve:
         specifier: 0.27.7
-        version: 0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@3.25.76))(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
+        version: 0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@3.25.76))(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
       zod:
         specifier: ^3.24.0
         version: 3.25.76
     devDependencies:
+      '@types/better-sqlite3':
+        specifier: ^9.6.0
+        version: 9.6.0
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.1
@@ -653,6 +659,9 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
+  '@types/better-sqlite3@9.6.0':
+    resolution: {integrity: sha512-ZEEwBSgMu7GYJOynoagg5X9JbxfL6dTJDsgViJIqh67jV44kyOr9RXfmFjLK5rzC4MWssP06t9hu/JwGDnUbCg==}
+
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
@@ -729,6 +738,10 @@ packages:
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
     engines: {node: '>= 0.4'}
+
+  better-sqlite3@13.0.3:
+    resolution: {integrity: sha512-RbOBxmLBG8uvFUc15X9+9SFemKcQ0WBuISBVkpuiaUB2qblC8UWlHEjdWVoZ8AdhSwmoEgsiXKfopX0CQxaACQ==}
+    engines: {node: '>=22'}
 
   cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
@@ -1151,6 +1164,10 @@ packages:
         optional: true
       zephyr-agent:
         optional: true
+
+  node-addon-api@8.9.2:
+    resolution: {integrity: sha512-VijLXbi3UACN69I0JVXJsX4tjACjNoQDgv2gTF6sx2wWEi8tkSg2eX8p5gSIFi8z2+DL3oHmY6OyKce38SDolg==}
+    engines: {node: ^18 || ^20 || >= 21}
 
   obug@2.1.4:
     resolution: {integrity: sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA==}
@@ -1878,6 +1895,10 @@ snapshots:
       tailwindcss: 4.3.3
       vite: 8.2.1(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.11)
 
+  '@types/better-sqlite3@9.6.0':
+    dependencies:
+      '@types/node': 22.20.1
+
   '@types/chai@5.2.3':
     dependencies:
       '@types/deep-eql': 4.0.2
@@ -1956,6 +1977,10 @@ snapshots:
 
   axobject-query@4.1.0: {}
 
+  better-sqlite3@13.0.3:
+    dependencies:
+      node-addon-api: 8.9.2
+
   cac@6.7.14: {}
 
   chai@5.3.3:
@@ -1984,7 +2009,9 @@ snapshots:
     optionalDependencies:
       srvx: 0.11.22
 
-  db0@0.3.4: {}
+  db0@0.3.4(better-sqlite3@13.0.3):
+    optionalDependencies:
+      better-sqlite3: 13.0.3
 
   debug@4.4.3:
     dependencies:
@@ -2051,10 +2078,10 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
 
-  eve@0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@3.25.76))(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11)):
+  eve@0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@3.25.76))(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11)):
     dependencies:
       ai: 7.0.61(zod@3.25.76)
-      nitro: 3.0.260610-beta(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
+      nitro: 3.0.260610-beta(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
     transitivePeerDependencies:
@@ -2255,11 +2282,11 @@ snapshots:
 
   nf3@0.3.23: {}
 
-  nitro@3.0.260610-beta(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11)):
+  nitro@3.0.260610-beta(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11)):
     dependencies:
       consola: 3.4.2
       crossws: 0.4.10(srvx@0.11.22)
-      db0: 0.3.4
+      db0: 0.3.4(better-sqlite3@13.0.3)
       env-runner: 0.1.16
       h3: 2.0.1-rc.22(crossws@0.4.10(srvx@0.11.22))
       hookable: 6.1.1
@@ -2270,7 +2297,7 @@ snapshots:
       rolldown: 1.2.3
       srvx: 0.11.22
       unenv: 2.0.0-rc.24
-      unstorage: 2.0.0-alpha.7(chokidar@4.0.3)(db0@0.3.4)(ofetch@2.0.0-alpha.3)
+      unstorage: 2.0.0-alpha.7(chokidar@4.0.3)(db0@0.3.4(better-sqlite3@13.0.3))(ofetch@2.0.0-alpha.3)
     optionalDependencies:
       jiti: 2.7.0
       rollup: 4.62.4
@@ -2306,6 +2333,8 @@ snapshots:
       - sqlite3
       - uploadthing
       - wrangler
+
+  node-addon-api@8.9.2: {}
 
   obug@2.1.4: {}
 
@@ -2486,10 +2515,10 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  unstorage@2.0.0-alpha.7(chokidar@4.0.3)(db0@0.3.4)(ofetch@2.0.0-alpha.3):
+  unstorage@2.0.0-alpha.7(chokidar@4.0.3)(db0@0.3.4(better-sqlite3@13.0.3))(ofetch@2.0.0-alpha.3):
     optionalDependencies:
       chokidar: 4.0.3
-      db0: 0.3.4
+      db0: 0.3.4(better-sqlite3@13.0.3)
       ofetch: 2.0.0-alpha.3
 
   vite-node@3.2.4(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11):

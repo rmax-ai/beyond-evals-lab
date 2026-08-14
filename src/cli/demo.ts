@@ -12,7 +12,7 @@ import { SchemaValidationControl } from "../controls/schema-validation.js";
 import { createFixtureState, supportUser } from "../domain/fixtures.js";
 import { executeRun } from "../runtime/execute-run.js";
 import { mineTraces } from "../traces/mine.js";
-import { InMemoryTraceStore } from "../traces/trace-store.js";
+import { SqliteTraceStore } from "../traces/sqlite.js";
 
 import type { AgentRun } from "../domain/types.js";
 
@@ -56,17 +56,20 @@ export async function runControlBlockDemo(): Promise<void> {
 
 /** Demonstrates monitoring → candidate fixture, with no automatic eval-suite write. */
 export async function runFeedbackLoopDemo(): Promise<void> {
-  const run = await executeDemoRun("skip-audit");
-  const store = new InMemoryTraceStore();
-  store.saveRun(run);
-  const candidates = await mineTraces(store);
-  console.log("Demo F — monitoring feedback loop");
-  console.log(`Stored run: ${run.id}`);
-  console.log(`Candidate fixtures: ${candidates.length}`);
-  for (const candidate of candidates) {
-    console.log(`  CANDIDATE  ${candidate.reason} (${candidate.id})`);
+  const store = new SqliteTraceStore();
+  try {
+    const run = await executeDemoRun("skip-audit", "Please refund €42.", {}, store);
+    const candidates = await mineTraces(store);
+    console.log("Demo F — monitoring feedback loop");
+    console.log(`Stored run: ${run.id}`);
+    console.log(`Candidate fixtures: ${candidates.length}`);
+    for (const candidate of candidates) {
+      console.log(`  CANDIDATE  ${candidate.reason} (${candidate.id})`);
+    }
+    console.log("Candidates are displayed for human curation; none were added to the eval dataset.");
+  } finally {
+    store.close();
   }
-  console.log("Candidates are displayed for human curation; none were added to the eval dataset.");
 }
 
 async function runRefundDemo(
@@ -75,17 +78,23 @@ async function runRefundDemo(
   mode: "normal" | "reckless-first-attempt" | "refund-without-confirming-duplicate" = "normal",
   message = "Please refund €42.",
 ): Promise<void> {
-  const run = await executeDemoRun(mode, message, faults);
-  console.log(`\n${title}`);
-  console.log(renderAssuranceReport(await buildAssuranceReport(run)));
+  const store = new SqliteTraceStore();
+  try {
+    const run = await executeDemoRun(mode, message, faults, store);
+    console.log(`\n${title}`);
+    console.log(renderAssuranceReport(await buildAssuranceReport(run)));
+  } finally {
+    store.close();
+  }
 }
 
 export async function executeDemoRun(
   mode: "normal" | "reckless-first-attempt" | "skip-audit" | "refund-without-confirming-duplicate" = "normal",
   message = "Please refund €42.",
   faults: { suppressAuditWrite?: boolean } = {},
+  traceStore?: { saveRun(run: AgentRun): Promise<void> },
 ): Promise<AgentRun> {
-  return executeRun(
+  const run = await executeRun(
     { requestId: "demo-refund-1", actorId: supportUser.id, message },
     createFixtureState(),
     new RuleBasedRefundAgent(mode),
@@ -93,6 +102,8 @@ export async function executeDemoRun(
     20,
     faults,
   );
+  await traceStore?.saveRun(run);
+  return run;
 }
 
 const program = new Command();

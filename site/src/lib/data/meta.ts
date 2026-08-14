@@ -67,14 +67,14 @@ export const EXPERIMENTS = [
     title: "Production creates future evals",
     commands: ["pnpm demo:feedback-loop", "pnpm traces:mine"],
     insight:
-      "Production traces become the empirical task distribution for future evaluations. The human curation step is preserved deliberately.",
+      "Demo runs are persisted in local SQLite before mining. Production traces become the empirical task distribution for future evaluations, with human curation preserved deliberately.",
   },
   {
     num: 8,
     title: "A real agent, same governed runtime",
     commands: ["EVE_MOCK=1 pnpm eve:eval", "pnpm demo:eve"],
     insight:
-      "Eve hosts a real framework agent whose tool calls still pass through the lab's controls, verification, and trace. Eve's evals score behavior; the lab's assurance report checks governance — same agent, two lenses. Keyless by default; a live model is opt-in.",
+      "Eve's default scenario model is keyless; opt-in direct mode uses real OpenAI GPT-5.6 Luna and overrides any inherited mock setting. Its fixture-backed refund tools still pass through the lab's controls, verification, trace persistence, and run-ID reporting.",
   },
 ] as const;
 

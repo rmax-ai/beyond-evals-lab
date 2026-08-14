@@ -23,8 +23,8 @@ export class InMemoryTraceStore implements TraceStore {
     this.pendingEvents.set(event.runId, [...(this.pendingEvents.get(event.runId) ?? []), structuredClone(event)]);
   }
 
-  /** Stores an immutable complete run; this is intentionally outside TraceStore's minimal contract. */
-  saveRun(run: AgentRun): void {
+  /** Stores an immutable complete run. */
+  async saveRun(run: AgentRun): Promise<void> {
     const pending = this.pendingEvents.get(run.id) ?? [];
     const trace = pending.length === 0 ? run.trace : [...run.trace, ...pending];
     this.runs.set(run.id, structuredClone({ ...run, trace }));

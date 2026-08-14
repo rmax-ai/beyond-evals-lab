@@ -28,4 +28,13 @@
     <code class="font-mono text-slate-400">EVE_DIRECT_OPENAI=1</code> +
     <code class="font-mono text-slate-400">OPENAI_API_KEY</code>.
   </p>
+
+  <p class="mt-3 text-sm text-slate-500">
+    Eve uses the scenario model only when direct mode is absent. Direct mode
+    uses the real OpenAI GPT-5.6 Luna model and takes precedence over an inherited mock
+    setting. The refund tools intentionally remain local, fixture-backed lab
+    tools. Each completed Eve session is stored in local SQLite for
+    <code class="font-mono text-slate-400">traces:mine</code> and
+    run-ID assurance reports.
+  </p>
 </Section>

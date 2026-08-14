@@ -112,6 +112,19 @@ Production traces become the empirical task distribution for future evaluations.
 The human curation step is preserved deliberately — observed behavior is not
 automatically expected behavior.
 
+### Trace storage
+
+Every demo run is persisted locally in SQLite at `traces/assurance.db` (which is
+gitignored). Mine the persisted history and render an assurance report for a
+stored run with:
+
+```bash
+pnpm traces:mine
+pnpm assurance:report <run-id>
+```
+
+Use `--database <path>` with either command to inspect another SQLite database.
+
 ## Eve Agent Wiring
 
 Eve hosts a real framework agent whose tools still run through the lab's
@@ -135,10 +148,15 @@ EVE_DIRECT_OPENAI=1 OPENAI_API_KEY=... pnpm demo:eve
 
 `EVE_MODEL` selects the model for the default Vercel AI Gateway path, which
 requires `AI_GATEWAY_API_KEY` or `eve link` (OIDC). `EVE_DIRECT_OPENAI=1`
-instead wires an OpenAI SDK model instance (`gpt-5.4-mini`) and bypasses the
-gateway — only `OPENAI_API_KEY` is needed. Keyless mock stays the default.
+instead wires the OpenAI SDK to `gpt-5.6-luna` and bypasses the gateway — only
+`OPENAI_API_KEY` is needed. Direct mode takes precedence over `EVE_MOCK=1`, so
+it cannot silently fall back to the scenario model; keyless mock stays the
+default when direct mode is not enabled.
 
-### Live-run results (Milestone 9)
+### Historical live-run results (Milestone 9)
+
+The results below were recorded with `gpt-5.4-mini`; they are not a performance
+claim for the current direct OpenAI default, `gpt-5.6-luna`.
 
 | Suite | Mock (`EVE_MOCK=1`) | Live (`EVE_DIRECT_OPENAI=1`, gpt-5.4-mini) |
 |---|---|---|

@@ -1,11 +1,14 @@
 import type { AgentRun, TraceEvent } from "../domain/types.js";
 
-// SQLite schema (requires better-sqlite3 — postponed until the native build
-// dependency is available). The in-memory adapter has the same public contract.
+// The SQLite store persists both the immutable run snapshots and their ordered
+// trace events. The in-memory adapter implements the same contract for tests.
 export const TRACE_DDL = `
 CREATE TABLE IF NOT EXISTS runs (
   id TEXT PRIMARY KEY,
   request_json TEXT NOT NULL,
+  initial_state_json TEXT NOT NULL,
+  final_state_json TEXT NOT NULL,
+  usage_json TEXT,
   started_at TEXT NOT NULL,
   completed_at TEXT,
   status TEXT
@@ -29,6 +32,9 @@ CREATE TABLE IF NOT EXISTS eval_candidates (
   candidate_json TEXT NOT NULL,
   status TEXT NOT NULL
 );
+CREATE INDEX IF NOT EXISTS idx_runs_started_at ON runs(started_at);
+CREATE INDEX IF NOT EXISTS idx_trace_events_run_sequence ON trace_events(run_id, sequence);
+CREATE INDEX IF NOT EXISTS idx_trace_events_type ON trace_events(type);
 `;
 
 export interface TraceQuery {
@@ -41,6 +47,7 @@ export interface TraceQuery {
 
 export interface TraceStore {
   append(event: TraceEvent): Promise<void>;
+  saveRun(run: AgentRun): Promise<void>;
   loadRun(runId: string): Promise<AgentRun>;
   query(filter: TraceQuery): Promise<AgentRun[]>;
 }

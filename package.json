@@ -22,6 +22,7 @@
     "demo:eve": "EVE_MOCK=1 tsx src/cli/eve.ts"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^22.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.7.0",
@@ -30,6 +31,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^4.0.40",
     "@opentelemetry/api": "^1.9.0",
+    "better-sqlite3": "^13.0.3",
     "commander": "^13.0.0",
     "eve": "0.27.7",
     "zod": "^3.24.0"
