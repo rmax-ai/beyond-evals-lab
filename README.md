@@ -125,6 +125,19 @@ pnpm assurance:report <run-id>
 
 Use `--database <path>` with either command to inspect another SQLite database.
 
+Add `--markdown` for an LLM-generated, human-friendly explanation of the same
+report. Markdown starts with a deterministic verdict, claim checklist,
+evidence references, controls, trajectory, and residual risk. The AI narrative
+appears last and is explicitly non-authoritative, making unsupported prose easy
+to compare against the deterministic sections. This is the only rendering that
+needs a key; the console and JSON formats stay keyless and deterministic.
+
+```bash
+OPENAI_API_KEY=... pnpm assurance:report --markdown
+```
+
+`ASSURANCE_REPORT_MODEL` overrides the default model (`gpt-5.6-luna`).
+
 ## Eve Agent Wiring
 
 Eve hosts a real framework agent whose tools still run through the lab's
