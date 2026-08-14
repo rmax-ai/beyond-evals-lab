@@ -120,7 +120,7 @@ class VerificationGrader extends Verifier implements Grader {}
 - Gates: `pnpm eve:info` for discovery, `EVE_MOCK=1 pnpm eve:eval` for keyless
   scenario evals, and `pnpm demo:eve` for an assurance report over a session.
 - Live runs (Milestone 9): `EVE_DIRECT_OPENAI=1` wires an OpenAI SDK model
-  instance (`gpt-5.4-mini`) through `@ai-sdk/openai`, bypassing the Vercel AI
+  instance (`gpt-5.6-luna`) through `@ai-sdk/openai`, bypassing the Vercel AI
   Gateway (which needs `AI_GATEWAY_API_KEY`/`eve link`). Needs
   `OPENAI_API_KEY`. `EVE_MODEL` still selects the gateway path by default.
   `demo:eve` respects `EVE_DIRECT_OPENAI=1` and stops forcing the mock server;

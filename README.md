@@ -135,12 +135,12 @@ EVE_DIRECT_OPENAI=1 OPENAI_API_KEY=... pnpm demo:eve
 
 `EVE_MODEL` selects the model for the default Vercel AI Gateway path, which
 requires `AI_GATEWAY_API_KEY` or `eve link` (OIDC). `EVE_DIRECT_OPENAI=1`
-instead wires an OpenAI SDK model instance (`gpt-5.4-mini`) and bypasses the
+instead wires an OpenAI SDK model instance (`gpt-5.6-luna`) and bypasses the
 gateway — only `OPENAI_API_KEY` is needed. Keyless mock stays the default.
 
 ### Live-run results (Milestone 9)
 
-| Suite | Mock (`EVE_MOCK=1`) | Live (`EVE_DIRECT_OPENAI=1`, gpt-5.4-mini) |
+| Suite | Mock (`EVE_MOCK=1`) | Live (`EVE_DIRECT_OPENAI=1`, gpt-5.6-luna) |
 |---|---|---|
 | Scenario evals | 4/4 (19/19 gates) | 3/4 (17/19 gates) |
 | `demo:eve` assurance | ACCEPTABLE | ACCEPTABLE |
