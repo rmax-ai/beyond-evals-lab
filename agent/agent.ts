@@ -7,7 +7,7 @@ import { shouldUseScenarioMock } from "../src/eve/model-selection.js";
 
 const useDirectOpenAI = process.env.EVE_DIRECT_OPENAI === "1";
 const useMockModel = shouldUseScenarioMock(process.env);
-const gatewayModel = process.env.EVE_MODEL ?? "openai/gpt-5.4-mini";
+const gatewayModel = process.env.EVE_MODEL ?? "openai/gpt-5.6-luna";
 const directOpenAIModel = "gpt-5.6-luna";
 
 // Live runs default to a Vercel AI Gateway model id, which requires
