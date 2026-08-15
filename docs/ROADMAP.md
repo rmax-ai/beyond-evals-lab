@@ -108,16 +108,18 @@ outcome, and residual risk as separate sections.
 
 **Focus:** SQLite trace store, trace mining, candidate fixture generation.
 
-- [ ] `src/traces/schema.ts` — SQLite DDL
-- [ ] `src/traces/sqlite.ts` — better-sqlite3 implementation
-- [ ] `src/traces/trace-store.ts` — TraceStore interface
-- [ ] `src/traces/mine.ts` — anomaly detection rules
-- [ ] `src/traces/fixture-generator.ts` — candidate fixture generation
-- [ ] `src/cli/mine.ts` — `pnpm traces:mine`
-- [ ] `src/cli/demo.ts` — Demo: feedback-loop
-- [ ] `test/traces/*.test.ts`
+- [x] `src/traces/schema.ts` — SQLite DDL
+- [x] `src/traces/sqlite.ts` — better-sqlite3 implementation
+- [x] `src/traces/trace-store.ts` — TraceStore interface
+- [x] `src/traces/mine.ts` — anomaly detection rules
+- [x] `src/traces/fixture-generator.ts` — candidate fixture generation
+- [x] `src/cli/mine.ts` — `pnpm traces:mine`
+- [x] `src/cli/demo.ts` — Demo: feedback-loop
+- [x] `test/traces/*.test.ts`
 
-**AC:** `pnpm traces:mine` finds anomalous traces. `pnpm demo:feedback-loop` works.
+**AC:** `pnpm traces:mine` finds anomalous traces, `pnpm demo:feedback-loop`
+works, and completed Eve sessions enter the same default SQLite store for
+mining and run-ID report reloads.
 
 ## Milestone 8 — Optional Model Integration
 
@@ -136,10 +138,12 @@ adapter.
 
 ## Milestone 9 — Live Model Run (optional)
 
-**Focus:** Run the Eve agent with a real provider using `EVE_MODEL` and
-`OPENAI_API_KEY`, then compare the result against the mock evals.
+**Focus:** Optional direct OpenAI wiring for the Eve agent without changing the
+keyless scenario path.
 
-- [ ] Run a live Eve session with `EVE_MODEL` + `OPENAI_API_KEY`
-- [ ] Compare live-model behavior with the keyless mock eval results
+- [x] Wire `EVE_DIRECT_OPENAI=1` to the OpenAI SDK `gpt-5.6-luna` model
+- [x] Make direct selection override `EVE_MOCK=1`, without model fallback
+- [ ] Run a live Luna Eve session and compare it with the keyless mock evals
 
-**AC:** Optional only; no API key is required by default.
+**AC:** Optional only; no API key is required by default. Local tests cover the
+wiring; live Luna performance remains unverified.

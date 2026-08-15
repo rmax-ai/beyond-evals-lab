@@ -363,7 +363,13 @@ Categories: happy path (5), authorization (5), ambiguous requests (5), trajector
 
 ## 18. Monitoring and Feedback Loop
 
-SQLite trace store (`traces/assurance.db`). `pnpm traces:mine` detects candidate regression cases. Human curation step preserved between detection and eval suite inclusion.
+SQLite trace store (`traces/assurance.db`). Every CLI demo persists its completed
+run to this shared store; in particular, `demo:eve` saves the exported Eve
+`AgentRun` before rendering its report. `pnpm traces:mine` reads that same
+default database, and `pnpm assurance:report <run-id>` reloads a stored run for
+an assurance report. Both accept `--database <path>` for an explicit store.
+Human curation remains preserved between candidate detection and eval suite
+inclusion.
 
 ---
 
@@ -386,6 +392,20 @@ SQLite trace store (`traces/assurance.db`). `pnpm traces:mine` detects candidate
   }
 }
 ```
+
+The ordinary console and JSON assurance reports are deterministic renderings of
+the `AssuranceReport`. `pnpm assurance:report --markdown <run-id>` is an
+opt-in explanatory layer: it requires `OPENAI_API_KEY`, writes a deterministic
+audit ledger (verdict, claim/evidence checklist, controls, trajectory, and
+residual risk) first, then labels generated prose as non-authoritative. It
+cannot change the deterministic disposition.
+
+For Eve, `EVE_MOCK=1` is the keyless scenario-model path. When
+`EVE_DIRECT_OPENAI=1` is selected, Eve instead uses the OpenAI SDK with
+`gpt-5.6-luna`; this direct selection takes precedence over a mock setting and
+does not silently fall back to it. The governed refund tools remain local,
+fixture-backed lab tools in either mode. Live Luna performance is not asserted
+by this specification because no live Luna run is part of its verification.
 
 ---
 

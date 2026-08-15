@@ -114,9 +114,9 @@ automatically expected behavior.
 
 ### Trace storage
 
-Every demo run is persisted locally in SQLite at `traces/assurance.db` (which is
-gitignored). Mine the persisted history and render an assurance report for a
-stored run with:
+Every CLI demo run, including a completed Eve session, is persisted locally in
+SQLite at `traces/assurance.db` (which is gitignored). Mine the shared history
+and reload an assurance report for a stored run with:
 
 ```bash
 pnpm traces:mine
@@ -133,7 +133,7 @@ to compare against the deterministic sections. This is the only rendering that
 needs a key; the console and JSON formats stay keyless and deterministic.
 
 ```bash
-OPENAI_API_KEY=... pnpm assurance:report --markdown
+OPENAI_API_KEY=... pnpm assurance:report --markdown <run-id>
 ```
 
 `ASSURANCE_REPORT_MODEL` overrides the default model (`gpt-5.6-luna`).
@@ -182,6 +182,18 @@ The one live eval gap is `refund-audit-gate`: its `get-transactions` and
 to skip the initial lookup, never triggers the gate, and honestly reports
 `REFUND_PERSISTED` — more compliant behavior, but the gates don't credit it.
 The evals are left unchanged; they calibrate the deterministic mock.
+
+### Operational caveats
+
+- Direct OpenAI wiring is covered by local model-selection tests, but this
+  repository has not run a live `gpt-5.6-luna` request. The historical table
+  above is deliberately not evidence of Luna performance.
+- Some keyless Eve eval runs can print local `world-local` queue retry warnings
+  after successful scenario completion. Treat those as local Eve development
+  infrastructure noise unless the command itself reports a failed scenario.
+- `pnpm --dir site build` writes the generated site to `docs/` and clears that
+  directory first. Preserve and restore the tracked technical Markdown files
+  in `docs/` (and `docs/plans/`) when regenerating the site output.
 
 ## Architecture
 

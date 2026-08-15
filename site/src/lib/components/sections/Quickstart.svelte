@@ -37,4 +37,12 @@
     <code class="font-mono text-slate-400">traces:mine</code> and
     run-ID assurance reports.
   </p>
+
+  <p class="mt-3 text-sm text-slate-500">
+    Console and JSON assurance reports are deterministic. The optional
+    <code class="font-mono text-slate-400">assurance:report --markdown</code>
+    starts with that audit ledger and puts any LLM explanation last, explicitly
+    labeled non-authoritative. Direct Luna wiring is locally tested, but its
+    live performance is not claimed here.
+  </p>
 </Section>

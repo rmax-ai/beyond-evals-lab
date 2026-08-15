@@ -119,12 +119,20 @@ class VerificationGrader extends Verifier implements Grader {}
 - Do not import zod anywhere under `agent/`.
 - Gates: `pnpm eve:info` for discovery, `EVE_MOCK=1 pnpm eve:eval` for keyless
   scenario evals, and `pnpm demo:eve` for an assurance report over a session.
-- Live runs (Milestone 9): `EVE_DIRECT_OPENAI=1` wires an OpenAI SDK model
-  instance (`gpt-5.4-mini`) through `@ai-sdk/openai`, bypassing the Vercel AI
-  Gateway (which needs `AI_GATEWAY_API_KEY`/`eve link`). Needs
-  `OPENAI_API_KEY`. `EVE_MODEL` still selects the gateway path by default.
-  `demo:eve` respects `EVE_DIRECT_OPENAI=1` and stops forcing the mock server;
-  `--json` / `--out <path>` render or persist the report.
+- Live runs (Milestone 9): `EVE_DIRECT_OPENAI=1` wires the OpenAI SDK model
+  `gpt-5.6-luna` through `@ai-sdk/openai`, bypassing the Vercel AI Gateway
+  (which needs `AI_GATEWAY_API_KEY`/`eve link`). It needs `OPENAI_API_KEY`.
+  Direct mode takes precedence over `EVE_MOCK=1`; `demo:eve` removes an
+  inherited mock setting from its server environment, so direct selection never
+  silently falls back to the scenario model. `EVE_MODEL` still selects the
+  gateway path when direct mode is absent. The refund tools remain intentionally
+  fixture-backed local lab tools, distinct from model mocking.
+- `demo:eve` persists each completed exported run to the same default SQLite
+  store used by `traces:mine` and `assurance:report <run-id>`; preserve `--out`
+  report behavior. Console and JSON reports are deterministic. `--markdown`
+  adds a non-authoritative LLM explanation after a deterministic audit ledger.
+- Do not imply a live `gpt-5.6-luna` performance result: wiring is covered by
+  local tests, but a live Luna request has not been run here.
 - Live eval calibration gap: `refund-audit-gate` gates are mock-probe-specific
   (see README "Live-run results"). Do not weaken eval gates to match live
   behavior; keep them calibrated to the deterministic mock.
@@ -189,7 +197,7 @@ pnpm demo:verification-failure # Demo C — verification failure
 pnpm demo:validation-failure   # Demo D — verification pass, validation fail
 pnpm demo:control-block        # Demo E — guardrail block
 pnpm demo:feedback-loop        # Production incident → regression
-pnpm demo:eve          # assurance report over a live Eve session
+pnpm demo:eve          # assurance report over an Eve session (keyless mock by default)
 pnpm traces:mine      # mine traces for candidate regression cases
 pnpm assurance:report # generate assurance report
 ```
