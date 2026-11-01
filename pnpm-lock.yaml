@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@ai-sdk/openai':
         specifier: ^4.0.40
-        version: 4.0.40(zod@3.25.76)
+        version: 4.0.40(zod@4.6.7)
       '@opentelemetry/api':
         specifier: ^1.9.0
         version: 1.9.1
       ai:
         specifier: ^7.0.34
-        version: 7.0.61(zod@3.25.76)
+        version: 7.0.61(zod@4.6.7)
       better-sqlite3:
         specifier: ^13.0.3
         version: 13.0.3
@@ -25,10 +25,10 @@ importers:
         version: 13.1.0
       eve:
         specifier: 0.27.7
-        version: 0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@3.25.76))(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
+        version: 0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@4.6.7))(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
       zod:
-        specifier: ^3.24.0
-        version: 3.25.76
+        specifier: ^4.6.6
+        version: 4.6.7
     devDependencies:
       '@types/better-sqlite3':
         specifier: ^9.6.0
@@ -1528,32 +1528,32 @@ packages:
   zimmerframe@1.1.4:
     resolution: {integrity: sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ==}
 
-  zod@3.25.76:
-    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+  zod@4.6.7:
+    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
 snapshots:
 
-  '@ai-sdk/gateway@4.0.49(zod@3.25.76)':
+  '@ai-sdk/gateway@4.0.49(zod@4.6.7)':
     dependencies:
       '@ai-sdk/provider': 4.0.7
-      '@ai-sdk/provider-utils': 5.0.27(zod@3.25.76)
+      '@ai-sdk/provider-utils': 5.0.27(zod@4.6.7)
       '@vercel/oidc': 3.2.0
-      zod: 3.25.76
+      zod: 4.6.7
 
-  '@ai-sdk/openai@4.0.40(zod@3.25.76)':
+  '@ai-sdk/openai@4.0.40(zod@4.6.7)':
     dependencies:
       '@ai-sdk/provider': 4.0.7
-      '@ai-sdk/provider-utils': 5.0.27(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 5.0.27(zod@4.6.7)
+      zod: 4.6.7
 
-  '@ai-sdk/provider-utils@5.0.27(zod@3.25.76)':
+  '@ai-sdk/provider-utils@5.0.27(zod@4.6.7)':
     dependencies:
       '@ai-sdk/provider': 4.0.7
       '@standard-schema/spec': 1.1.0
       '@workflow/serde': 4.1.0
       eventsource-parser: 3.1.1
       undici: 7.29.0
-      zod: 3.25.76
+      zod: 4.6.7
 
   '@ai-sdk/provider@4.0.7':
     dependencies:
@@ -1967,12 +1967,12 @@ snapshots:
 
   acorn@8.18.0: {}
 
-  ai@7.0.61(zod@3.25.76):
+  ai@7.0.61(zod@4.6.7):
     dependencies:
-      '@ai-sdk/gateway': 4.0.49(zod@3.25.76)
+      '@ai-sdk/gateway': 4.0.49(zod@4.6.7)
       '@ai-sdk/provider': 4.0.7
-      '@ai-sdk/provider-utils': 5.0.27(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 5.0.27(zod@4.6.7)
+      zod: 4.6.7
 
   aria-query@5.3.1: {}
 
@@ -2081,9 +2081,9 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
 
-  eve@0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@3.25.76))(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11)):
+  eve@0.27.7(@opentelemetry/api@1.9.1)(ai@7.0.61(zod@4.6.7))(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11)):
     dependencies:
-      ai: 7.0.61(zod@3.25.76)
+      ai: 7.0.61(zod@4.6.7)
       nitro: 3.0.260610-beta(better-sqlite3@13.0.3)(chokidar@4.0.3)(jiti@2.7.0)(rollup@4.62.4)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.11))
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
@@ -2626,4 +2626,4 @@ snapshots:
 
   zimmerframe@1.1.4: {}
 
-  zod@3.25.76: {}
+  zod@4.6.7: {}
